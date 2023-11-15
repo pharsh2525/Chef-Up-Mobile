@@ -5,5 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.ChefUp" parent="Base.Theme.ChefUp" />
+    <style name="Theme.ChefUp" parent="Base.Theme.ChefUp" >
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 </resources>
