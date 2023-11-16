@@ -18,6 +18,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 startActivity(iHome);
+                finish();
             }
         },3000);
 
