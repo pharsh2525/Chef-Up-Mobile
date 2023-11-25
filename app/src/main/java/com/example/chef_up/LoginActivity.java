@@ -4,16 +4,26 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthEmailException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
 public class LoginActivity extends AppCompatActivity {
 
-
+    private String email;
+    private String password;
+    private TextInputEditText emailInput;
+    private  TextInputEditText passwordInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +36,8 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(login()){
-                    Intent logInIntent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(logInIntent);
-                    finish();
+                if(isValid()){
+                    login(email, password);
                 }
             }
         });
@@ -43,13 +51,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private boolean login() {
-        TextInputEditText emailInput = findViewById(R.id.inEmail);
-        TextInputEditText passwordInput = findViewById(R.id.inPassword);
+    private boolean isValid() {
+        emailInput = findViewById(R.id.inEmail);
+        passwordInput = findViewById(R.id.inPassword);
         boolean isValid = true;
 
-        String email = emailInput.getText().toString().trim();
-        String password = passwordInput.getText().toString().trim();
+        email = emailInput.getText().toString().trim();
+        password = passwordInput.getText().toString().trim();
 
         if(email.isEmpty()){
             emailInput.setError("Email is required");
@@ -70,5 +78,19 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return isValid;
+    }
+
+    private void login(String email, String  password){
+        FirebaseApp.initializeApp(this);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+            } else {
+                Toast.makeText(LoginActivity.this, "Invalid email or password.", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

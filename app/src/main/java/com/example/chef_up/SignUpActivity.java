@@ -7,11 +7,17 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpActivity extends AppCompatActivity {
-
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,10 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(signUp()){
-                    Intent signUpIntent = new Intent(SignUpActivity.this, MainActivity.class);
-                    signUpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(signUpIntent);
-                    finish();
+                    createNewUser(null,null,email,password);
                 }
             }
         });
@@ -39,10 +42,10 @@ public class SignUpActivity extends AppCompatActivity {
         TextInputEditText passwordInput = findViewById(R.id.inPassword);
         boolean isValid = true;
 
-        String firstName = firstNameInput.getText().toString().trim();
-        String lastName = lastNameInput.getText().toString().trim();
-        String email = emailInput.getText().toString().trim();
-        String password = passwordInput.getText().toString().trim();
+        firstName = firstNameInput.getText().toString().trim();
+        lastName = lastNameInput.getText().toString().trim();
+        email = emailInput.getText().toString().trim();
+        password = passwordInput.getText().toString().trim();
 
         if(firstName.isEmpty()){
             firstNameInput.setError("First name is required");
@@ -78,5 +81,19 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         return isValid;
+    }
+
+    private void createNewUser(String firstName, String lastname, String email, String password){
+        FirebaseApp.initializeApp(this);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }else {
+                        Toast.makeText(this, "Account creation failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
