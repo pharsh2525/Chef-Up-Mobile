@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "325532726930",
+    "project_id": "chef-up",
+    "storage_bucket": "chef-up.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325532726930:android:894b1082e3935ae6cb584b",
+        "android_client_info": {
+          "package_name": "com.example.chef_up"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzvjwn9Z_iK97RisHkbvR0W-rDT25-nGI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
