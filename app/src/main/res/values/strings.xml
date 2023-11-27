@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Chef-Up</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_home">Home</string>
+    <string name="search_your_favourite_recipe">Search your favourite recipe</string>
+    <string name="cook_like_a_pro_with_nour_expertly_crafted_recipes">Cook like a pro with \nour expertly crafted recipes</string>
+    <string name="welcome_to_chef_up">Lets to Chef-up!</string>
+    <string name="your_favorite_meals">Your favorite meals</string>
+    <string name="profile">Profile</string>
+    <string name="categories">Categories</string>
+    <string name="see_more">See more</string>
 </resources>
