@@ -2,6 +2,8 @@ package com.example.chef_up.adapers;
 
 import static com.example.chef_up.databinding.ItemRecipeBinding.inflate;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -43,14 +45,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHole
             super(itemView.getRoot());
             binding = itemView;
         }
+        public void onBind(Recipe recipe) {
+            String imageName = recipe.getImage();
+            Context context = itemView.getContext();
+            int imageResId = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
 
-        public void onBind(Recipe recipe){
-            if(recipe.getImage().equalsIgnoreCase("recipe1")){
-                binding.imgRecipe.setImageResource(R.drawable.recipe1);
-            }else if(recipe.getImage().equalsIgnoreCase("recipe2")){
-                binding.imgRecipe.setImageResource(R.drawable.recipe2);
-            }else{
-                binding.imgRecipe.setImageResource(R.drawable.recipe3);
+            if (imageResId != 0) {
+                binding.imgRecipe.setImageResource(imageResId);
+            } else {
+                binding.imgRecipe.setImageResource(R.drawable.logo); // A default image
             }
             binding.tvRecipeName.setText(recipe.getName());
         }

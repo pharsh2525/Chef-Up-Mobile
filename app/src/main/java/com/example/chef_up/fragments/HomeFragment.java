@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
     private void loadHighLightRecipes() {
         binding.rvHighLight.setAdapter(new RecipeAdapter());
         popularRecipes = new ArrayList<>();
-        popularRecipes.add(new Recipe("1", "Popular One","null", "Itallian", "quick", "recipe1", "chef-Up"));
+        popularRecipes.add(new Recipe("1", "Popular One","null", "Itallian", "quick", "recipe4", "chef-Up"));
         popularRecipes.add(new Recipe("1", "Popular Two","null", "Itallian", "quick", "recipe2", "chef-Up"));
         popularRecipes.add(new Recipe("1", "Popular Three","null", "Itallian", "quick", "recipe3", "chef-Up"));
         popularRecipes.add(new Recipe("1", "Popular Four","null", "Itallian", "quick", "recipe1", "chef-Up"));
@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
         favouriteRecipes.add(new Recipe("1", "Favourite One","null", "Itallian", "quick", "recipe1", "chef-Up"));
         favouriteRecipes.add(new Recipe("2", "Favourite Two","null", "Itallian", "quick", "recipe2", "chef-Up"));
         favouriteRecipes.add(new Recipe("1", "Favourite Three","null", "Itallian", "quick", "recipe3", "chef-Up"));
-        favouriteRecipes.add(new Recipe("1", "Favourite Four","null", "Itallian", "quick", "recipe1", "chef-Up"));
+        favouriteRecipes.add(new Recipe("1", "Favourite Four","null", "Itallian", "quick", "recipe4", "chef-Up"));
         binding.rvFavorites.setAdapter(new RecipeAdapter());
         RecipeAdapter adapter = (RecipeAdapter) binding.rvFavorites.getAdapter();
         if(adapter != null){
