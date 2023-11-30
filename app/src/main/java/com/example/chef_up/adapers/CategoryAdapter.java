@@ -7,14 +7,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
 import com.example.chef_up.R;
 import com.example.chef_up.databinding.ItemCategoryBinding;
 import com.example.chef_up.models.Category;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryHolder> {
-    List<Category> categoryList;
+    List<Category> categoryList = new ArrayList<>();
 
     public void setCategoryList(List<Category> categoryList){
         this.categoryList = categoryList;
@@ -46,15 +49,21 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         }
 
         public void onBind(Category category){
-            String imageName = category.getImage();
-            Context context = itemView.getContext();
-            int imageRedId = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
-
-            if(imageRedId != 0){
-                binding.imgCategory.setImageResource(imageRedId);
-            }else{
-                binding.imgCategory.setImageResource(R.drawable.logo);
-            }
+//            String imageName = category.getImage();
+//            Context context = itemView.getContext();
+//            int imageRedId = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+//
+//            if(imageRedId != 0){
+//                binding.imgCategory.setImageResource(imageRedId);
+//            }else{
+//                binding.imgCategory.setImageResource(R.drawable.logo);
+//            }
+            Glide
+                    .with(binding.getRoot().getContext())
+                    .load(category.getImage())
+                    .centerCrop()
+                    .placeholder(R.mipmap.ic_launcher)
+                    .into(binding.imgCategory);
         }
     }
 }
