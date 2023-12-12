@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
                 FirebaseApp.initializeApp(SplashActivity.this);
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if(user != null){
-                    startActivity(new Intent(SplashActivity.this, MainActivity2.class));
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
                 }else {
                     startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                 }
@@ -30,7 +30,5 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         },3000);
-
-
     }
 }

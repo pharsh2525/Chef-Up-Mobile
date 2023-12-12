@@ -10,6 +10,10 @@ public class Recipe {
     private String image;
     private String user;
 
+    public Recipe() {
+
+    }
+
     public Recipe(String id, String name, String description, String cuisine, String category, String image, String user) {
         this.id = id;
         this.name = name;

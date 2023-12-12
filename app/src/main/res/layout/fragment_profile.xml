@@ -14,7 +14,6 @@
         android:layout_width="173dp"
         android:layout_height="151dp"
         android:layout_marginTop="32dp"
-        android:src="@drawable/recipe1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +32,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnManageAccounts"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
@@ -46,7 +45,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnMyRecipes"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
@@ -60,7 +59,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnFavRecipes"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
@@ -71,10 +70,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnMyRecipes" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnShareRecipe"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:drawableStart="@drawable/ic_category"
+        android:text="Share New Recipes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFavRecipes" />
+
     <Button
         android:id="@+id/btnLogOut"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="108dp"
@@ -83,7 +96,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnFavRecipes"
+        app:layout_constraintTop_toBottomOf="@+id/btnShareRecipe"
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
