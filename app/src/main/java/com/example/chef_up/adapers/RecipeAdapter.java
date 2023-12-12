@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.chef_up.R;
 import com.example.chef_up.databinding.ItemRecipeBinding;
 import com.example.chef_up.models.Recipe;
@@ -48,13 +49,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHole
         public void onBind(Recipe recipe) {
             String imageName = recipe.getImage();
             Context context = itemView.getContext();
-            int imageResId = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
-
-            if (imageResId != 0) {
-                binding.imgRecipe.setImageResource(imageResId);
-            } else {
-                binding.imgRecipe.setImageResource(R.drawable.logo); // A default image
-            }
+            Glide.with(context)
+                    .load(recipe.getImage())
+                    .centerCrop()
+                    .placeholder(R.drawable.logo)
+                    . into(binding.imgRecipe);
             binding.tvRecipeName.setText(recipe.getName());
         }
     }
