@@ -5,6 +5,7 @@ import static com.example.chef_up.databinding.ItemRecipeBinding.inflate;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.chef_up.R;
+import com.example.chef_up.RecipeDetailActivity;
 import com.example.chef_up.databinding.ItemRecipeBinding;
 import com.example.chef_up.models.Recipe;
 
@@ -33,6 +35,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHole
     public void onBindViewHolder(@NonNull RecipeAdapter.RecipeHoler holder, int position) {
         Recipe recipe = recipeList.get(position);
         holder.onBind(recipe);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start RecipeDetailActivity and pass the selected recipe
+                RecipeDetailActivity.start(holder.itemView.getContext(), recipe);
+            }
+        });
     }
 
     @Override

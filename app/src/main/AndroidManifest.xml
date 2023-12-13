@@ -22,6 +22,9 @@
         <activity
             android:name=".AddRecipeActivity"
             android:exported="false" />
+        <activity android:name=".RecipeDetailActivity">
+            <!-- If you have any intent-filters, they go here -->
+        </activity>
         <activity
             android:name=".SplashActivity"
             android:exported="true">

@@ -1,6 +1,7 @@
 package com.example.chef_up.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.chef_up.models.MealDBResponse;
 import com.example.chef_up.models.Recipe;
 import com.example.chef_up.models.TheMealDBService;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     List<Recipe> favouriteRecipes;
-    List<Recipe> popularRecipes;
+    private static List<Recipe> popularRecipes = null;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -41,7 +43,11 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         loadFavouriteRecipes();
-        fetchRandomMeals();
+        if (popularRecipes == null) {
+            fetchRandomMeals(); // Fetch meals only if they haven't been fetched before
+        } else {
+            updateRecyclerView(); // Update RecyclerView with existing data
+        }
     }
     private void fetchRandomMeals() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -75,7 +81,7 @@ public class HomeFragment extends Fragment {
 
     private Recipe convertMealToRecipe(Meal meal) {
         // Convert Meal object to Recipe object
-        return new Recipe("", meal.getStrMeal(), meal.getStrInstructions(), "", "", meal.getStrMealThumb(), "");
+        return new Recipe("", meal.getStrMeal(), meal.getFormattedDescription(), "", "", meal.getStrMealThumb(), "");
     }
 
     private void updateRecyclerView() {
@@ -83,22 +89,6 @@ public class HomeFragment extends Fragment {
         adapter.setRecipeList(popularRecipes);
         binding.rvHighLight.setAdapter(adapter);
     }
-
-//    private void loadHighLightRecipes() {
-//        binding.rvHighLight.setAdapter(new RecipeAdapter());
-//        popularRecipes = new ArrayList<>();
-//        popularRecipes.add(new Recipe("1", "Popular One","null", "Itallian", "quick", "recipe4", "chef-Up"));
-//        popularRecipes.add(new Recipe("1", "Popular Two","null", "Itallian", "quick", "recipe2", "chef-Up"));
-//        popularRecipes.add(new Recipe("1", "Popular Three","null", "Itallian", "quick", "recipe3", "chef-Up"));
-//        popularRecipes.add(new Recipe("1", "Popular Four","null", "Itallian", "quick", "recipe1", "chef-Up"));
-//
-//        RecipeAdapter adapter = (RecipeAdapter) binding.rvHighLight.getAdapter();
-//        if(adapter != null){
-//            adapter.setRecipeList(popularRecipes);
-//            adapter.notifyDataSetChanged();
-//        }
-//
-//    }
 
     private void loadFavouriteRecipes() {
         favouriteRecipes = new ArrayList<>();
