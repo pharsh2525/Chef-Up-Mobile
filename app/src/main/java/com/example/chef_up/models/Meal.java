@@ -4,18 +4,35 @@ import java.io.Console;
 import java.lang.reflect.Field;
 
 public class Meal {
+    // Name of the meal
     private String strMeal;
+
+    // Cooking instructions for the meal
     private String strInstructions;
+
+    // URL of the meal's thumbnail image
     private String strMealThumb;
+
+    // Up to 15 ingredients and their corresponding measurements
     private String strIngredient1, strIngredient2,strIngredient3,strIngredient4,strIngredient5,strIngredient6,strIngredient7,strIngredient8,strIngredient9,strIngredient10,strIngredient11,strIngredient12,strIngredient13,strIngredient14,strIngredient15;
     private String strMeasure1, strMeasure2,strMeasure3,strMeasure4,strMeasure5,strMeasure6,strMeasure7,strMeasure8,strMeasure9,strMeasure10,strMeasure11,strMeasure12,strMeasure13,strMeasure14,strMeasure15;
 
-    // Constructors
+    /**
+     * Default constructor for instantiating a new Meal object.
+     * Required for Firebase's automatic data mapping.
+     */
     public Meal() {}
 
+    /**
+     * Generates a formatted string that contains the ingredients and cooking instructions.
+     * @return A string containing formatted meal description.
+     */
     public String getFormattedDescription() {
+        // Initialize a StringBuilder with the ingredients header
         StringBuilder formatted = new StringBuilder("Ingredients:\n");
 
+        // Append each non-empty ingredient and its measure to the formatted string
+        // The pattern is repeated for all ingredients and measures
         if (strIngredient1 != null && !strIngredient1.trim().isEmpty()) formatted.append(strIngredient1).append(": ").append(strMeasure1 != null ? strMeasure1 : "").append("\n");
         if (strIngredient2 != null && !strIngredient2.trim().isEmpty()) formatted.append(strIngredient2).append(": ").append(strMeasure2 != null ? strMeasure2 : "").append("\n");
         if (strIngredient3 != null && !strIngredient3.trim().isEmpty()) formatted.append(strIngredient3).append(": ").append(strMeasure3 != null ? strMeasure3 : "").append("\n");
@@ -32,11 +49,15 @@ public class Meal {
         if (strIngredient14 != null && !strIngredient14.trim().isEmpty()) formatted.append(strIngredient14).append(": ").append(strMeasure14 != null ? strMeasure14 : "").append("\n");
         if (strIngredient15 != null && !strIngredient15.trim().isEmpty()) formatted.append(strIngredient15).append(": ").append(strMeasure15 != null ? strMeasure15 : "").append("\n");
 
+        // Append the instructions header and the actual instructions
         formatted.append("\nInstructions:\n").append(strInstructions);
 
+        // Return the trimmed string
         return formatted.toString().trim();
     }
 
+    // Getter and setter methods for each field
+    // These methods are used to access and modify the private fields of the class
     public String getStrMeal() {
         return strMeal;
     }

@@ -27,28 +27,51 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * HomeFragment is responsible for displaying lists of popular and favorite recipes on the home screen.
+ * It fetches random meals from TheMealDB API and displays them in two separate RecyclerViews.
+ */
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    List<Recipe> favouriteRecipes;
+    private List<Recipe> favouriteRecipes;
     private static List<Recipe> popularRecipes = null;
 
+    /**
+     * Inflates the layout for the fragment's UI and initializes view binding.
+     *
+     * @param inflater LayoutInflater object to inflate views in the fragment.
+     * @param container Parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state.
+     * @return The View for the fragment's UI.
+     */
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-        return root;
+        return binding.getRoot();
     }
 
+    /**
+     * Called immediately after onCreateView. Checks if popular recipes have been previously fetched.
+     * If not, it initiates the process to fetch random meals.
+     *
+     * @param view The View returned by onCreateView.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadFavouriteRecipes();
         if (popularRecipes == null) {
-            fetchRandomMeals(); // Fetch meals only if they haven't been fetched before
+            fetchRandomMeals();
         } else {
-            updateRecyclerView(); // Update RecyclerView with existing data
+            updateRecyclerViews();
         }
     }
+
+    /**
+     * Fetches random meals from TheMealDB API and updates the RecyclerViews for popular and favorite recipes.
+     * This method fetches data asynchronously and updates the adapter once data is fetched.
+     */
     private void fetchRandomMeals() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://www.themealdb.com/")
@@ -56,54 +79,76 @@ public class HomeFragment extends Fragment {
                 .build();
 
         TheMealDBService service = retrofit.create(TheMealDBService.class);
-        popularRecipes = new ArrayList<>();
 
-        for (int i = 0; i < 4; i++) {
+        // Assuming you want 4 random meals for each list
+        int totalCalls = 8; // 4 for popular and 4 for favorites
+        popularRecipes = new ArrayList<>();
+        favouriteRecipes = new ArrayList<>();
+
+        for (int i = 0; i < totalCalls; i++) {
             service.getRandomMeal().enqueue(new Callback<MealDBResponse>() {
                 @Override
                 public void onResponse(Call<MealDBResponse> call, Response<MealDBResponse> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         Meal meal = response.body().getFirstMeal();
                         if (meal != null) {
-                            popularRecipes.add(convertMealToRecipe(meal));
-                            updateRecyclerView();
+                            if (popularRecipes.size() < 4) {
+                                popularRecipes.add(convertMealToRecipe(meal));
+                            } else {
+                                favouriteRecipes.add(convertMealToRecipe(meal));
+                            }
+
+                            if (popularRecipes.size() + favouriteRecipes.size() == totalCalls) {
+                                updateRecyclerViews();
+                            }
                         }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<MealDBResponse> call, Throwable t) {
-                    // Handle failure
+                    // Handle API request failure
                 }
             });
         }
     }
 
+    /**
+     * Updates the RecyclerView adapters for both popular and favorite recipes lists.
+     */
+    private void updateRecyclerViews() {
+        RecipeAdapter popularAdapter = (RecipeAdapter) binding.rvHighLight.getAdapter();
+        if (popularAdapter == null) {
+            popularAdapter = new RecipeAdapter();
+            binding.rvHighLight.setAdapter(popularAdapter);
+        }
+        popularAdapter.setRecipeList(popularRecipes);
+        popularAdapter.notifyDataSetChanged();
+
+        RecipeAdapter favouriteAdapter = (RecipeAdapter) binding.rvFavorites.getAdapter();
+        if (favouriteAdapter == null) {
+            favouriteAdapter = new RecipeAdapter();
+            binding.rvFavorites.setAdapter(favouriteAdapter);
+        }
+        favouriteAdapter.setRecipeList(favouriteRecipes);
+        favouriteAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Converts a Meal object from the API response to a Recipe object suitable for the adapter.
+     *
+     * @param meal The Meal object to convert.
+     * @return The converted Recipe object.
+     */
     private Recipe convertMealToRecipe(Meal meal) {
         // Convert Meal object to Recipe object
         return new Recipe("", meal.getStrMeal(), meal.getFormattedDescription(), "", "", meal.getStrMealThumb(), "");
     }
 
-    private void updateRecyclerView() {
-        RecipeAdapter adapter = new RecipeAdapter();
-        adapter.setRecipeList(popularRecipes);
-        binding.rvHighLight.setAdapter(adapter);
-    }
-
-    private void loadFavouriteRecipes() {
-        favouriteRecipes = new ArrayList<>();
-        favouriteRecipes.add(new Recipe("1", "Favourite One","null", "Itallian", "quick", "recipe1", "chef-Up"));
-        favouriteRecipes.add(new Recipe("2", "Favourite Two","null", "Itallian", "quick", "recipe2", "chef-Up"));
-        favouriteRecipes.add(new Recipe("1", "Favourite Three","null", "Itallian", "quick", "recipe3", "chef-Up"));
-        favouriteRecipes.add(new Recipe("1", "Favourite Four","null", "Itallian", "quick", "recipe4", "chef-Up"));
-        binding.rvFavorites.setAdapter(new RecipeAdapter());
-        RecipeAdapter adapter = (RecipeAdapter) binding.rvFavorites.getAdapter();
-        if(adapter != null){
-            adapter.setRecipeList(favouriteRecipes);
-            adapter.notifyDataSetChanged();
-        }
-    }
-
+    /**
+     * Called when the view previously created by onCreateView has been detached from the fragment.
+     * The binding is set to null to avoid memory leaks.
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();

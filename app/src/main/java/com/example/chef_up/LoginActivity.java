@@ -13,6 +13,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * Activity for handling user login in the Chef Up application.
+ * This class provides UI and logic for users to log in with their email and password.
+ * It also provides a link to the SignUpActivity for users who need to create an account.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private String email;
@@ -20,14 +25,21 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText emailInput;
     private  TextInputEditText passwordInput;
 
+    /**
+     * Called when the activity is starting.
+     * It sets up the user interface for the login screen from the layout resource.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down, this contains the data it most recently supplied in onSaveInstanceState(Bundle). Otherwise, it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
+        // Initialize UI components and set up event listeners
         Button loginButton = findViewById(R.id.btnLogin);
         Button signUpButton = findViewById(R.id.btnSignUp);
+
+        // Login button click event
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // Sign-up button click event
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,6 +59,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Validates the user's email and password input.
+     * Checks if the email and password fields are not empty and if the email is in a valid format.
+     * @return true if the input is valid, false otherwise.
+     */
     private boolean isValid() {
         emailInput = findViewById(R.id.inEmail);
         passwordInput = findViewById(R.id.inPassword);
@@ -75,6 +93,12 @@ public class LoginActivity extends AppCompatActivity {
         return isValid;
     }
 
+    /**
+     * Attempts to log in the user with the provided email and password.
+     * Initializes Firebase, then uses FirebaseAuth to sign in with email and password.
+     * @param email The user's email address.
+     * @param password The user's password.
+     */
     private void login(String email, String  password){
         FirebaseApp.initializeApp(this);
         FirebaseAuth auth = FirebaseAuth.getInstance();

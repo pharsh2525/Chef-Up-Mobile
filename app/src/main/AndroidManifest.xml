@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ChefUp"
         tools:targetApi="31">
         <activity
+            android:name=".UserRecipeActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main2" />
@@ -23,6 +26,7 @@
             android:name=".AddRecipeActivity"
             android:exported="false" />
         <activity android:name=".RecipeDetailActivity">
+
             <!-- If you have any intent-filters, they go here -->
         </activity>
         <activity

@@ -11,10 +11,22 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.chef_up.databinding.ActivityMainBinding;
 
+/**
+ * The main activity of the Chef Up application.
+ * This class sets up the main user interface with a BottomNavigationView for navigation
+ * between different fragments representing different sections of the app.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
+
+    /**
+     * Called when the activity is starting.
+     * This method inflates the activity's UI, sets the content view, and configures the navigation controller.
+     * It defines navigation behavior and associates the BottomNavigationView with the NavController.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down, this contains the data it most recently supplied in onSaveInstanceState(Bundle). Otherwise, it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

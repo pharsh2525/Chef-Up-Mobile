@@ -9,7 +9,7 @@
     <string name="profile">Profile</string>
     <string name="categories">Categories</string>
     <string name="see_more">See more</string>
-<string name="categories_intro">Flavors for Every Moment\nBrowse Our Recipe Categories!</string>
+    <string name="categories_intro">Flavors for Every Moment\nBrowse Our Recipe Categories!</string>
     <string name="add_recipe_title">Craft and Contribute:\nYour Recipe Could be the Next Big Hit!</string>
     <string name="recipe_submit_button">Share Your Recipe</string>
 </resources>

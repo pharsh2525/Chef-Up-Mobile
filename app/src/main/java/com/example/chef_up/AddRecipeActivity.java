@@ -33,11 +33,21 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity class for adding a new recipe in the Chef Up application.
+ * It handles user input for new recipes, including the recipe's name, description, category, and image.
+ * The activity interacts with Firebase to store recipe data and images.
+ */
 public class AddRecipeActivity extends AppCompatActivity {
 
     ActivityAddRecipeBinding binding;
     private Recipe recipe;
     private Bitmap bitmap;
+
+    /**
+     * Called when the activity is starting. It sets up the user interface and event listeners.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down, this contains the data it most recently supplied in onSaveInstanceState(Bundle). Otherwise, it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +72,10 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Loads the list of recipe categories from Firebase and updates the UI.
+     * It queries the 'Categories' node in Firebase and populates the category input field.
+     */
     private void loadCategories() {
         List<String> categories = new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, categories);
@@ -86,6 +100,11 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Handles the submission of a new recipe by the user.
+     * Validates the input data, creates a new Recipe object, and uploads it to Firebase.
+     * If an image is selected, it also triggers the image upload.
+     */
     private void UserRecipe() {
         String name = binding.inDishName.getText().toString();
         String description = binding.inDishDescription.getText().toString();
@@ -134,6 +153,11 @@ public class AddRecipeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Uploads the selected image to Firebase Storage and returns the image URL.
+     * Uses a ByteArrayOutputStream to compress the image and upload it.
+     * @return A Task containing the URL of the uploaded image.
+     */
     private Task<String> uploadImage() {
         TaskCompletionSource<String> taskCompletionSource = new TaskCompletionSource<>();
         String id = System.currentTimeMillis() + "";
